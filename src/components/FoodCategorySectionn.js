@@ -16,37 +16,7 @@ const categories = [
     
 const FoodCategorySectionn = ({ onSearch }) => {
   const [index, setIndex] = useState(2);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showSearchResults, setShowSearchResults] = useState(false);
-
   const navigate = useNavigate(); // ✅ Initialize navigate
-
-  // Handle search input changes
-  const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    setShowSearchResults(query.trim().length > 0);
-    
-    if (onSearch) {
-      onSearch(query);
-    }
-  };
-
-  // Handle dish selection from search results
-  const handleDishSelect = (dish) => {
-    setSearchQuery(dish.name);
-    setShowSearchResults(false);
-    if (onSearch) {
-      onSearch(dish.name);
-    }
-  };
-
-  // Close search results when clicking outside
-  const handleSearchBlur = () => {
-    setTimeout(() => {
-      setShowSearchResults(false);
-    }, 200);
-  };
 
   const nextSlide = () => {
     setIndex((prev) => (prev + 1) % categories.length);
@@ -89,7 +59,7 @@ const FoodCategorySectionn = ({ onSearch }) => {
                 src="https://res.cloudinary.com/dlurlrbou/image/upload/v1752564365/download-removebg-preview_9_xch5mc.png"
                 alt="Cart"
                 style={{ width: "40px", height: "40px", cursor: "pointer" }}
-                onClick={() => navigate("/cart")} // ✅ This routes to /cart
+                onClick={() => navigate("/cart")}
               />
             </span>
           </div>

@@ -1,31 +1,20 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import './DeliveryDashboard.css';
 import { useAuth } from '../context/AuthContext';
-import { usersAPI } from '../services/api';
 import { ordersAPI } from '../services/api';
 
 const initialAvailable = [];
 
 export default function DeliveryDashboard() {
-	const { user, updateUser } = useAuth();
+	const { user } = useAuth();
 	const [isOnline, setIsOnline] = useState(true);
 	const [availableOrders, setAvailableOrders] = useState(initialAvailable);
 	const [activeOrder, setActiveOrder] = useState(null);
 	const [completedOrders, setCompletedOrders] = useState([]);
-	const [profile, setProfile] = useState({
-		avatarUrl: '',
-		name: 'Your Name',
-		bikeNumber: ''
-	});
 
 	useEffect(() => {
 		if (user) {
-			setProfile(prev => ({
-				...prev,
-				name: user.name || 'Your Name',
-				avatarUrl: user.avatar || '',
-				bikeNumber: user.bikeNumber || ''
-			}));
+			// profile fields removed from UI; keep placeholder if needed later
 		}
 	}, [user]);
 
@@ -40,21 +29,11 @@ export default function DeliveryDashboard() {
 		const order = availableOrders.find(o => o.id === orderId);
 		if (!order) return;
 		try {
-			const updated = await ordersAPI.updateStatus(orderId, 'accepted_delivery');
+			await ordersAPI.updateStatus(orderId, 'accepted_delivery');
 			setAvailableOrders(prev => prev.filter(o => o.id !== orderId));
-			// Move to Active Order after accept
 			setActiveOrder({ ...order, status: 'Accepted' });
 		} catch (e) {
 			console.error('Failed to accept order', e);
-		}
-	};
-
-	const rejectOrder = async (orderId) => {
-		try {
-			await ordersAPI.updateStatus(orderId, 'rejected');
-			setAvailableOrders(prev => prev.filter(o => o.id !== orderId));
-		} catch (e) {
-			console.error('Failed to reject order', e);
 		}
 	};
 
@@ -62,7 +41,6 @@ export default function DeliveryDashboard() {
 		if (!activeOrder) return;
 		try {
 			if (newStatus === 'Picked Up') {
-				// Update backend to out_for_delivery and reflect in UI as Picked Up
 				await ordersAPI.updateStatus(activeOrder.id, 'out_for_delivery');
 				setActiveOrder(prev => ({ ...prev, status: 'Picked Up' }));
 				return;
@@ -101,7 +79,6 @@ export default function DeliveryDashboard() {
 		const ev = new EventSource((process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api') + '/orders/events');
 		const refresh = () => load();
 		ev.addEventListener('order_created', refresh);
-		ev.addEventListener('order_confirmed', refresh);
 		ev.addEventListener('order_updated', refresh);
 		ev.addEventListener('order_assigned', refresh);
 		return () => { mounted = false; clearInterval(id); ev.close(); };
@@ -111,7 +88,7 @@ export default function DeliveryDashboard() {
 		<div className="dd-container">
 			<header className="dd-header">
 				<div className="dd-left">
-					<button className={'dd-hamburger'} aria-label="Open Profile" onClick={() => setShowProfile(true)}>
+					<button className={'dd-hamburger'} aria-label="Open Profile" onClick={() => {}}>
 						<span></span>
 						<span></span>
 						<span></span>

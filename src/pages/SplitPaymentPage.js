@@ -2,7 +2,7 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./PaymentPage.css"; // Reusing the same styles
 
 const SplitPaymentPage = () => {
@@ -15,7 +15,6 @@ const SplitPaymentPage = () => {
   } = useContext(CartContext);
   
   const navigate = useNavigate();
-  const location = useLocation();
   const [selectedPeople, setSelectedPeople] = useState([]);
   const [paymentStatuses, setPaymentStatuses] = useState({});
   const [upiIds, setUpiIds] = useState({});

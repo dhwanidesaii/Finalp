@@ -25,7 +25,7 @@ const SplitUpiCollectionPage = () => {
 
   const totalAmount = calculateTotal();
   const splitAmount = calculateSplitAmount();
-  const manualSplitSummary = getManualSplitSummary();
+  // manualSplitSummary not needed directly in this component
 
   useEffect(() => {
     // If cart is empty or split bill not enabled, redirect

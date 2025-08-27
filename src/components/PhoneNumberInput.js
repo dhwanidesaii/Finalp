@@ -21,8 +21,6 @@ const PhoneNumberInput = ({ onSuccess, onBack }) => {
 
 	const { 
 		checkPhoneNumber, 
-		sendLoginOTP, 
-		sendRegistrationOTP, 
 		verifyLoginOTP, 
 		verifyRegistrationOTP,
 		isExistingUser,
