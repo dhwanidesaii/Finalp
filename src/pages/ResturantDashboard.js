@@ -48,14 +48,6 @@ const ResturantDashboard = () => {
 		} catch (_) {}
 	};
 
-	// handle order confirmed event from SSE
-	const onConfirmed = (e) => {
-		try {
-			const order = JSON.parse(e.data);
-			updateStatusLocal(order.id, 'Accepted');
-		} catch (_) {}
-	};
-
 	useEffect(() => {
 		const base = (process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api');
 		const ev = new EventSource(base + '/orders/events');
@@ -108,7 +100,6 @@ const ResturantDashboard = () => {
 
 		ev.addEventListener('order_created', onCreated);
 		ev.addEventListener('order_updated', onUpdated);
-		ev.addEventListener('order_confirmed', onConfirmed);
 		ev.addEventListener('order_accepted', onAccepted);
 		ev.addEventListener('order_ready', onReadyForPickup);
 		ev.addEventListener('order_assigned', onAssigned);
@@ -116,7 +107,6 @@ const ResturantDashboard = () => {
 		return () => {
 			ev.removeEventListener('order_created', onCreated);
 			ev.removeEventListener('order_updated', onUpdated);
-			ev.removeEventListener('order_confirmed', onConfirmed);
 			ev.removeEventListener('order_accepted', onAccepted);
 			ev.removeEventListener('order_ready', onReadyForPickup);
 			ev.removeEventListener('order_assigned', onAssigned);

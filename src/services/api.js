@@ -199,10 +199,12 @@ export const ordersAPI = {
   }),
 };
 
-export default {
+const api = {
   auth: authAPI,
   restaurants: restaurantsAPI,
   dishes: dishesAPI,
   users: usersAPI,
   orders: ordersAPI,
 };
+
+export default api;
