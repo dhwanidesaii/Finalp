@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GlobalSearch from './GlobalSearch';
-import RestaurantSearch from './RestaurantSearch';
 import './DominosPizzaPage.css';
 import { CartContext } from '../context/CartContext'; // Added import for CartContext
 

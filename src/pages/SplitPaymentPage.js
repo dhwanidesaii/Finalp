@@ -24,7 +24,7 @@ const SplitPaymentPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   
-  const initialPayerUpiId = location.state?.payerUpiId || '';
+  // initial payer UPI ID is not used directly here
 
   const totalAmount = calculateTotal();
   const manualSplitSummary = getManualSplitSummary();

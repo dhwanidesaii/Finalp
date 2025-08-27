@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
-import { GOOGLE_MAPS_CONFIG, VadodaraUtils, MAP_ICONS } from '../config/googleMaps';
+import { GOOGLE_MAPS_CONFIG, MAP_ICONS } from '../config/googleMaps';
 import './OrderTracking.css';
 
 const OrderTracking = ({ orderId, onClose }) => {

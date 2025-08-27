@@ -12,14 +12,11 @@ export default function DeliveryDashboard() {
 	const [availableOrders, setAvailableOrders] = useState(initialAvailable);
 	const [activeOrder, setActiveOrder] = useState(null);
 	const [completedOrders, setCompletedOrders] = useState([]);
-	const [showProfile, setShowProfile] = useState(false);
 	const [profile, setProfile] = useState({
 		avatarUrl: '',
 		name: 'Your Name',
 		bikeNumber: ''
 	});
-	const [saving, setSaving] = useState(false);
-	const [saveError, setSaveError] = useState('');
 
 	useEffect(() => {
 		if (user) {
@@ -81,41 +78,7 @@ export default function DeliveryDashboard() {
 		}
 	};
 
-	const handleProfileSave = async (e) => {
-		e.preventDefault();
-		setSaving(true);
-		setSaveError('');
-		try {
-			const payload = {
-				name: profile.name,
-				bikeNumber: profile.bikeNumber,
-				avatar: profile.avatarUrl
-			};
-			const updated = await usersAPI.updateProfile(payload);
-			localStorage.setItem('user', JSON.stringify(updated));
-			updateUser?.(updated);
-			setShowProfile(false);
-		} catch (err) {
-			setSaveError(err?.message || 'Failed to save profile');
-		} finally {
-			setSaving(false);
-		}
-	};
-
-	const handleAvatarFile = async (e) => {
-		const file = e.target.files?.[0];
-		if (!file) return;
-		setSaving(true);
-		setSaveError('');
-		try {
-			const { url } = await usersAPI.uploadAvatar(file);
-			setProfile(prev => ({ ...prev, avatarUrl: url }));
-		} catch (err) {
-			setSaveError(err?.message || 'Failed to upload image');
-		} finally {
-			setSaving(false);
-		}
-	};
+	// Profile edit handlers removed (not used in current UI)
 
 	useEffect(() => {
 		let mounted = true;

@@ -6,7 +6,6 @@ import PhoneNumberInput from '../components/PhoneNumberInput';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-  const [showOTP, setShowOTP] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
 
