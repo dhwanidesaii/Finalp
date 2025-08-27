@@ -4,7 +4,7 @@ import './AdminDashboard.css';
 
 export default function AdminDashboard() {
 	const [orders, setOrders] = useState([]);
-	const [filter, setFilter] = useState('all');
+	const [filter, setFilter] = useState('pending_delivery');
 
 	// Load existing orders on mount so the table isn't empty if admin opens late
 	useEffect(() => {
@@ -41,6 +41,7 @@ export default function AdminDashboard() {
 		ev.addEventListener('order_updated', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
 		ev.addEventListener('order_accepted', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
 		ev.addEventListener('order_ready_for_pickup', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
+		ev.addEventListener('order_ready', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
 		ev.addEventListener('order_assigned', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
 		ev.addEventListener('order_reassigned', e => { try { upsert(JSON.parse(e.data)); } catch(_){} });
 		return () => ev.close();

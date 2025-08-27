@@ -35,14 +35,15 @@ const ResturantDashboard = () => {
 	// accept order
 	const acceptOrder = async (id) => {
 		try {
-			await ordersAPI.updateStatus(id, 'confirmed');
+			await ordersAPI.acceptByRestaurant(id);
+			updateStatusLocal(id, 'Accepted');
 		} catch (_) {}
 	};
 
 	// reject order
 	const rejectOrder = async (id) => {
 		try {
-			await ordersAPI.updateStatus(id, 'rejected'); // or "cancelled" if backend expects that
+			await ordersAPI.rejectByRestaurant(id);
 			updateStatusLocal(id, 'Cancelled');
 		} catch (_) {}
 	};
@@ -78,6 +79,7 @@ const ResturantDashboard = () => {
 				const order = JSON.parse(e.data);
 				const mapped = order.status === 'out_for_delivery'
 					? 'Out for Delivery'
+					: order.status === 'pending_delivery' ? 'Accepted'
 					: (order.status === 'delivered' ? 'Delivered' : 'Pending');
 				updateStatusLocal(order.id, mapped);
 			} catch (_) {}

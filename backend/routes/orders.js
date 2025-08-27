@@ -119,7 +119,7 @@ router.post('/', [
       deliveryInstructions: deliveryInstructions || '',
       paymentMethod,
       paymentStatus: paymentStatus || 'pending',
-      status: (paymentStatus === 'paid') ? 'pending_delivery' : 'pending',
+      status: 'pending',
       payoutAmount: calcPayout,
     });
     const response = {
@@ -285,7 +285,7 @@ router.post('/:id/accept-restaurant', optionalAuth, async (req, res) => {
     if (mongoose.connection && mongoose.connection.readyState === 1) {
       const doc = await Order.findOneAndUpdate(
         { orderId: req.params.id },
-        { $set: { status: 'accepted' } },
+        { $set: { status: 'pending_delivery' } },
         { new: true }
       ).lean();
       if (!doc) return res.status(404).json({ error: 'Order not found' });
